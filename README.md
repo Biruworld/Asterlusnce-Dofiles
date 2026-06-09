@@ -5,3 +5,6 @@ With Hatsune Miku cursor:
 https://github.com/supermariofps/hatsune-miku-windows-linux-cursors
 
 Niri config is including the Cursor.
+
+It is using: https://github.com/noctalia-dev/noctalia
+Noctalia Shell
