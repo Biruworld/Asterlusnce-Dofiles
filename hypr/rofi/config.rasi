@@ -1,0 +1,120 @@
+
+configuration {
+    modes: "drun";
+    sorting-method: "normal";
+    show-icons: true;
+    matching: "regex";
+    drun-match-fields: "name";
+    display-run: "menu:";
+    display-drun: "アプリ :";
+}
+
+@theme "sakura"
+
+* {
+    font: "JetBrains Mono Nerd Font 11";
+    background-color: transparent;
+
+    margin: 0px;
+    padding: 0px;
+    spacing: 0px;
+}
+
+/* ===== Window ===== */
+window {
+    location: center;
+    width: 500;
+    y-offset: -20;
+
+    border-radius: 0px;
+    border: 2px;
+    border-color: #C3A5E6;
+
+    background-color: rgba(30, 30, 46, 0.92);
+}
+
+/* ===== Main container ===== */
+mainbox {
+    padding: 0px;
+    background-color: #1B1D2E;
+}
+
+/* ===== Input bar ===== */
+inputbar {
+    background-color: #302037;
+    border-radius: 1px;
+    border: 1px;
+    border-color: rgba(90, 79, 111, 0.8);
+
+    padding: 8px 16px;
+    spacing: 8px;
+}
+
+prompt {
+    text-color: @cyan;
+    background-color: transparent;
+}
+
+entry {
+    placeholder: " 検索";
+    placeholder-color: @cyan;
+    background-color: transparent;
+}
+
+/* ===== List ===== */
+listview {
+    background-color: #1B1D2E;
+    margin: 10px 0 0;
+
+    columns: 1;
+    lines: 6;
+    fixed-height: false;
+}
+
+/* ===== Elements ===== */
+element {
+    padding: 10px 6px;
+    spacing: 6px;
+    border-radius: 1px;
+
+    background-color: #1B1D2E;
+}
+
+element normal urgent {
+    text-color: @red;
+}
+
+element normal active {
+    text-color: @blue;
+}
+
+element selected normal,
+element selected active {
+    background-color: rgba(138, 120, 170, 0.22);
+}
+
+/* ===== Icons & text ===== */
+element-icon {
+    size: 1em;
+    vertical-align: 0.5;
+}
+
+element-text {
+    text-color: inherit;
+    background-color: transparent;
+}
+
+/* ===== Message box ===== */
+message {
+    margin: 12px 0 0;
+    border-radius: 12px;
+    border: 1px;
+    border-color: rgba(90, 79, 111, 0.8);
+
+    background-color: rgba(17, 19, 24, 0.9);
+}
+
+textbox {
+    padding: 8px 24px;
+    background-color: rgba(17, 19, 24, 0.9);
+}
