@@ -110,7 +110,8 @@ mode "1366x768@60"
 scale 1
 }
 output "eDP-1" {
-off
+mode "1920x1080@60"
+scale 1
 }
 
 // Settings that influence how windows are positioned and sized.
