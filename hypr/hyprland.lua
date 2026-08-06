@@ -29,15 +29,28 @@ hl.monitor({
 })
 hl.monitor({
 	output = "eDP-1",
-	disabled = true,
+	mode = "1920x1080@144",
+	position = "auto",
+	scale = "1.5",
 })
+
+-- unscale XWayland
+hl.config({
+	xwayland = {
+		force_zero_scaling = true,
+	},
+})
+
+-- toolkit-specific scale
+hl.env("GDK_SCALE", "2")
+hl.env("XCURSOR_SIZE", "32")
 ---------------------
 ---- MY PROGRAMS ----
 ---------------------
 
 -- Set programs that you use
 local terminal = "kitty"
-local fileManager = "thunar"
+local fileManager = "nautilus"
 local menu = "rofi -show"
 
 -------------------
@@ -48,28 +61,28 @@ local menu = "rofi -show"
 
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
-hl.on("hyprland.start", function()
-	hl.exec_cmd("noctalia")
-end)
--- Hatsune Miku cursor autostart lmao
+--hl.on("hyprland.start", function()
+--	hl.exec_cmd("noctalia")
+--end)
+--brightness Hatsune Miku cursor autostart lmao
 hl.on("hyprland.start", function()
 	hl.exec_cmd("hyprctl setcursor miku-cursor-linux 24")
-end)
-hl.on("hyprland.start", function()
 	hl.exec_cmd("fcitx5 -d")
+	hl.exec_cmd("swaync")
+	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("waybar")
 end)
-
 -- Noctalia Blur
-hl.layer_rule({
-	name = "noctalia",
-	match = {
-		namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd)$",
-	},
-	no_anim = true,
-	ignore_alpha = 0.5,
-	blur = true,
-	blur_popups = true,
-})
+--hl.layer_rule({
+--	name = "noctalia",
+--	match = {
+--		namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd)$",
+--	},
+--	no_anim = true,
+--	ignore_alpha = 0.5,
+--keybinds	blur = true,
+--	blur_popups = true,
+--})
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
@@ -123,12 +136,12 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 2,
+		rounding = 0,
 		rounding_power = 2,
 
 		-- Change transparency of focused and unfocused windows
 		active_opacity = 1.0,
-		inactive_opacity = 1.0,
+		inactive_opacity = 0.8,
 
 		shadow = {
 			enabled = true,
@@ -158,25 +171,25 @@ hl.curve("almostLinear", { type = "bezier", points = { { 0.5, 0.5 }, { 0.75, 1 }
 hl.curve("quick", { type = "bezier", points = { { 0.15, 0 }, { 0.1, 1 } } })
 
 -- Default springs
-hl.curve("easy", { type = "spring", mass = 1, stiffness = 71.2633, dampening = 15.8273644 })
+hl.curve("easy", { type = "spring", mass = 1, stiffness = 121.2633, dampening = 15.8273644 })
 
-hl.animation({ leaf = "global", enabled = true, speed = 10, bezier = "default" })
-hl.animation({ leaf = "border", enabled = true, speed = 5.39, bezier = "easeOutQuint" })
-hl.animation({ leaf = "windows", enabled = true, speed = 4.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 4.1, spring = "easy", style = "popin 87%" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 1.49, bezier = "linear", style = "popin 87%" })
-hl.animation({ leaf = "fadeIn", enabled = true, speed = 1.73, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeOut", enabled = true, speed = 1.46, bezier = "almostLinear" })
-hl.animation({ leaf = "fade", enabled = true, speed = 3.03, bezier = "quick" })
-hl.animation({ leaf = "layers", enabled = true, speed = 3.81, bezier = "easeOutQuint" })
-hl.animation({ leaf = "layersIn", enabled = true, speed = 4, bezier = "easeOutQuint", style = "fade" })
+hl.animation({ leaf = "global", enabled = true, speed = 2, bezier = "default" })
+hl.animation({ leaf = "border", enabled = true, speed = 2.39, bezier = "easeOutQuint" })
+hl.animation({ leaf = "windows", enabled = true, speed = 2.79, spring = "easy" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.1, spring = "easy", style = "popin 87%" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.49, bezier = "linear", style = "popin 87%" })
+hl.animation({ leaf = "fadeIn", enabled = true, speed = 2.73, bezier = "almostLinear" })
+hl.animation({ leaf = "fadeOut", enabled = true, speed = 2.46, bezier = "almostLinear" })
+hl.animation({ leaf = "fade", enabled = true, speed = 2.03, bezier = "quick" })
+hl.animation({ leaf = "layers", enabled = true, speed = 1.81, bezier = "easeOutQuint" })
+hl.animation({ leaf = "layersIn", enabled = true, speed = 2, bezier = "easeOutQuint", style = "fade" })
 hl.animation({ leaf = "layersOut", enabled = true, speed = 1.5, bezier = "linear", style = "fade" })
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 1.79, bezier = "almostLinear" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 1.39, bezier = "almostLinear" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.21, bezier = "almostLinear", style = "fade" })
+hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.51, bezier = "easeOutQuint", style = "fade" })
 hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" })
+hl.animation({ leaf = "zoomFactor", enabled = true, speed = 3, bezier = "quick" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
@@ -190,6 +203,7 @@ hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" 
 --     rounding    = 0,
 -- })
 -- hl.window_rule({
+
 --     name  = "no-gaps-f1",
 --     match = { float = false, workspace = "f[1]" },
 --     border_size = 0,
@@ -282,7 +296,7 @@ hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + X", hl.dsp.layout("togglesplit")) -- dwindle only
-
+--hl.bind("SUPER + TAB", hl.plugin.gloview.toggle)
 -- fullscreen
 hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 -- screenshot
@@ -307,12 +321,11 @@ hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:mag
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e-1" }))
-hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "r+1" }))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
-
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind(
 	"XF86AudioRaiseVolume",
@@ -405,3 +418,75 @@ hl.window_rule({
 	move = "20 monitor_h-120",
 	float = true,
 })
+
+hl.window_rule({
+	match = {
+		class = "popup-bluetooth",
+	},
+
+	float = true,
+	center = true,
+	size = { 800, 500 },
+})
+
+hl.window_rule({
+	match = {
+		class = "popup-btop",
+	},
+
+	float = true,
+	center = true,
+	size = { 800, 500 },
+})
+
+hl.window_rule({
+	match = {
+		class = "popup-gazelle",
+	},
+
+	float = true,
+	center = true,
+	size = { 800, 500 },
+})
+hl.window_rule({
+	match = {
+		class = "org.pulseaudio.pavucontrol",
+	},
+
+	float = true,
+	center = true,
+	size = { 800, 500 },
+})
+
+-- HyprMod managed settings
+--require("hyprland-gui")
+
+-- Keybinds for gloview
+hl.bind("SUPER + TAB", hl.plugin.gloview.toggle)
+hl.bind("SUPER + SHIFT + TAB", hl.plugin.gloview.desktop)
+hl.bind("SUPER + CTRL + TAB", hl.plugin.gloview.allworkspaces)
+
+hl.bind("SUPER + bracketright", hl.plugin.gloview.next)
+hl.bind("SUPER + bracketleft", hl.plugin.gloview.prev)
+hl.bind("SUPER + 2", function()
+	hl.plugin.gloview.setworkspace(2)
+end)
+
+hl.config({
+	plugin = {
+		hyprexpo = {
+			columns = 3,
+			gaps_in = 5,
+			gaps_out = 0,
+			bg_col = "rgb(111111)",
+			workspace_method = "center current",
+			gesture_distance = 200,
+			cancel_key = "escape",
+			show_cursor = 1,
+		},
+	},
+})
+
+hl.bind("ALT + TAB", function()
+	hl.plugin.hyprexpo.expo("toggle")
+end)
