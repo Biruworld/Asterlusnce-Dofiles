@@ -1,4 +1,4 @@
-@import "../omarchy/current/theme/waybar.css";
+@import "../waybar/waybar.css";
 
 * {
   background-color: alpha(@background, 0.9);
