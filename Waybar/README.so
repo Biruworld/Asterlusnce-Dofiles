@@ -1,5 +1,7 @@
-this is the waybar.. Actually using someone else code and modify it a bit. 
+this is the waybar.. Actually using someone else (From a person who made config for changing waybar on the omarchy distrobution. 
+code and modify it a bit. 
 
 Requirements:
 1. Waybar
-2. playerctl (i think)
+2. playerctl
+
