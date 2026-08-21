@@ -1,6 +1,8 @@
 this is the waybar.. Actually using someone else (From a person who made config for changing waybar on the omarchy distrobution. 
 code and modify it a bit. 
 
+There's Nix Logo (Snowflake Emoji actually, so you can change it based on what distro you used)
+
 Requirements:
 1. Waybar
 2. playerctl
