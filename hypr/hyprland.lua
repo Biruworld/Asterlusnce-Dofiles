@@ -16,23 +16,9 @@
 -- Create your files separately and then require them like this:
 -- require("myColors")
 
-------------------
----- MONITORS ----
-------------------
-
--- See https://wiki.hypr.land/Configuring/Basics/Monitors/
-hl.monitor({
-	output = "HDMI-A-1",
-	mode = "1366x768",
-	position = "auto",
-	scale = "auto",
-})
-hl.monitor({
-	output = "eDP-1",
-	mode = "1920x1080@144",
-	position = "auto",
-	scale = "1.5",
-})
+-- Monitor Section
+require("monitor")
+require("powermonitor")
 
 -- unscale XWayland
 hl.config({
@@ -71,6 +57,11 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("swaync")
 	hl.exec_cmd("hyprpaper")
 	hl.exec_cmd("waybar")
+	hl.exec_cmd("kitty -e hyprpm enable gloview hyprexpo")
+  hl.exec_cmd("kitty -e systemctl --user enable --now polkit-kde-authentication-agent-1.service")
+  hl.exec_cmd("kwallet6")
+  hl.exec_cmd("kitty -e systemctl --user enable --now kwallet6")
+
 end)
 -- Noctalia Blur
 --hl.layer_rule({
@@ -90,7 +81,6 @@ end)
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
 -- Cursor
-hl.exec_cmd("hyprctl setcursor miku-cursor-linux 24")
 -----------------------
 ----- PERMISSIONS -----
 -----------------------
@@ -176,19 +166,19 @@ hl.curve("easy", { type = "spring", mass = 1, stiffness = 121.2633, dampening = 
 hl.animation({ leaf = "global", enabled = true, speed = 2, bezier = "default" })
 hl.animation({ leaf = "border", enabled = true, speed = 2.39, bezier = "easeOutQuint" })
 hl.animation({ leaf = "windows", enabled = true, speed = 2.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.1, spring = "easy", style = "popin 87%" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 2.1, spring = "easy", style = "popin 87%" })
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 2.49, bezier = "linear", style = "popin 87%" })
 hl.animation({ leaf = "fadeIn", enabled = true, speed = 2.73, bezier = "almostLinear" })
 hl.animation({ leaf = "fadeOut", enabled = true, speed = 2.46, bezier = "almostLinear" })
 hl.animation({ leaf = "fade", enabled = true, speed = 2.03, bezier = "quick" })
-hl.animation({ leaf = "layers", enabled = true, speed = 1.81, bezier = "easeOutQuint" })
+hl.animation({ leaf = "layers", enabled = true, speed = 2.81, bezier = "easeOutQuint" })
 hl.animation({ leaf = "layersIn", enabled = true, speed = 2, bezier = "easeOutQuint", style = "fade" })
-hl.animation({ leaf = "layersOut", enabled = true, speed = 1.5, bezier = "linear", style = "fade" })
-hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 1.79, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 1.39, bezier = "almostLinear" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.51, bezier = "easeOutQuint", style = "fade" })
-hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 2.5, bezier = "linear", style = "fade" })
+hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 2.79, bezier = "almostLinear" })
+hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 2.39, bezier = "almostLinear" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 2.94, bezier = "almostLinear", style = "fade" })
+hl.animation({ leaf = "workspacesIn", enabled = true, speed = 2.51, bezier = "easeOutQuint", style = "fade" })
+hl.animation({ leaf = "workspacesOut", enabled = true, speed = 2.94, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 3, bezier = "quick" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
@@ -410,83 +400,37 @@ hl.window_rule({
 -- })
 -- overlayLayerRule:set_enabled(false)
 
--- Hyprland-run windowrule
-hl.window_rule({
-	name = "move-hyprland-run",
-	match = { class = "hyprland-run" },
-
-	move = "20 monitor_h-120",
-	float = true,
-})
-
-hl.window_rule({
-	match = {
-		class = "popup-bluetooth",
-	},
-
-	float = true,
-	center = true,
-	size = { 800, 500 },
-})
-
-hl.window_rule({
-	match = {
-		class = "popup-btop",
-	},
-
-	float = true,
-	center = true,
-	size = { 800, 500 },
-})
-
-hl.window_rule({
-	match = {
-		class = "popup-gazelle",
-	},
-
-	float = true,
-	center = true,
-	size = { 800, 500 },
-})
-hl.window_rule({
-	match = {
-		class = "org.pulseaudio.pavucontrol",
-	},
-
-	float = true,
-	center = true,
-	size = { 800, 500 },
-})
-
+-- My hyprland windowrule config
+require("hypr_windowrule")
 -- HyprMod managed settings
 --require("hyprland-gui")
 
 -- Keybinds for gloview
-hl.bind("SUPER + TAB", hl.plugin.gloview.toggle)
-hl.bind("SUPER + SHIFT + TAB", hl.plugin.gloview.desktop)
-hl.bind("SUPER + CTRL + TAB", hl.plugin.gloview.allworkspaces)
+--hl.bind("SUPER + TAB", hl.plugin.gloview.toggle)
+--hl.bind("SUPER + SHIFT + TAB", hl.plugin.gloview.desktop)
+--hl.bind("SUPER + CTRL + TAB", hl.plugin.gloview.allworkspaces)
 
-hl.bind("SUPER + bracketright", hl.plugin.gloview.next)
-hl.bind("SUPER + bracketleft", hl.plugin.gloview.prev)
-hl.bind("SUPER + 2", function()
-	hl.plugin.gloview.setworkspace(2)
-end)
+--hl.bind("SUPER + bracketright", hl.plugin.gloview.next)
+--hl.bind("SUPER + bracketleft", hl.plugin.gloview.prev)
+--hl.bind("SUPER + 2", function()
+--	hl.plugin.gloview.setworkspace(2)
+--end)
 
-hl.config({
-	plugin = {
-		hyprexpo = {
-			columns = 3,
-			gaps_in = 5,
-			gaps_out = 0,
-			bg_col = "rgb(111111)",
-			workspace_method = "center current",
-			gesture_distance = 200,
-			cancel_key = "escape",
-			show_cursor = 1,
-		},
-	},
-})
+--hl.config({
+--	plugin = {
+--		hyprexpo = {
+--			columns = 3,
+--			gaps_in = 5,
+--			gaps_out = 0,
+--			bg_col = "rgb(111111)",
+--			workspace_method = "center current",
+--			gesture_distance = 200,
+--			cancel_key = "escape",
+--			show_cursor = 1,
+--		},
+--	},
+--})
 
-hl.bind("ALT + TAB", function()
-	hl.plugin.hyprexpo.expo("toggle")
-end)
+--hl.bind("ALT + TAB", function()
+--	hl.plugin.hyprexpo.expo("toggle")
+--end)
